@@ -1,1 +1,37 @@
+project_name: nhanes-age-intelligence
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  merge_key: SEQN
+  files:
+    demographic: demographic.csv
+    diet: diet.csv
+    examination: examination.csv
+    labs: labs.csv
+    medications: medications.csv
+  target_column: RIDAGEYR  # Age in years
+  features:
+    - BMXWT  # Weight (kg)
+    - BMXHT  # Height (cm)
+    - BMXBMI # BMI
+    - BMXWAIST # Waist Circumference
+    - LBXSTP # Total Protein
+    - LBXSTR # Triglyceride
+    - LBXSCH # Cholesterol
+    - RIAGENDR # Gender
 
+model:
+  type: RandomForestRegressor
+  params:
+    n_estimators: 100
+    max_depth: 10
+    random_state: 42
+  save_path: models/saved_model.pkl
+
+api:
+  host: 0.0.0.0
+  port: 8000
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
